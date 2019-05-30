@@ -1,3 +1,12 @@
 import React from 'react'; 
 
-export default props => <div onClick={props.toggleComplete}>{props.text}</div>; 
+
+function Todo(props) {
+    return(
+        <div>
+            {props.task}
+        </div>
+    )
+}
+
+export default Todo; 

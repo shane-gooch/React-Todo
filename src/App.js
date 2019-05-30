@@ -1,52 +1,56 @@
 import React from 'react';
-import TodoList from './components/TodoComponents/TodoList';
-import shortid from 'shortid';
+import TodoList from './components/TodoComponents/TodoList'
+import TodoForm from './components/TodoComponents/TodoForm';
+
+
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
   // design `App` to be the parent component of your application.
   // this component is going to take care of state, and any change handlers you need to work with your state
-  constructor(){
-    super();
-    this.state = {
-      id: '',
-      text: "",
-      complete: '',
+    state={
+      tasks: [
+        {
+          task: 'Organize Garage',
+          id: 1528817077286,
+          completed: false
+        },
+        {
+          task: 'Bake Cookies',
+          id: 1528817084358,
+          completed: false
+        }
+      ],
+      taskInput: ''
     };
 
-  }
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    };
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.onSubmit({
-            id: shortid.generate(),
-            text: this.state.text,
-            complete: false,
-        });
-        this.setState({
-            text: ''
-        })
+    changeHandler = e => {
+      e.preventDefault();
+      this.setState({
+        [e.target.name]: e.target.value
+      })
     };
-
-    handleRemove = (e) => {
-        e.preventDefault();
-        this.setState({
-            text: ''
-        })
-    }
     
+    addTask = e => {
+      e.preventDefault();
+      const newTask = {
+        task: this.state.taskInput,
+        id: Date.now(),
+        completed: false
+      }
+      this.setState({
+        tasks: [...this.state.tasks, newTask],
+        taskInput: ''
+      })
+    }
     render() {
-      return(
-        <div className="App">
-          <TodoList />
-
+      return (
+        <div>
+          <TodoList tasks={this.state.tasks}/>;
+          <TodoForm taskInput={this.state.taskInput} changeHandler={this.changeHandler} addTask={this.addTask}/>; 
         </div>
-      )
+      );
     }
   }
 

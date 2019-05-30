@@ -1,22 +1,21 @@
 import React from 'react';
 
 
-class TodoForm extends React.Component {
+function TodoForm(props) {
+    return(
+        <form className='form' onSubmit={e => props.addTask(e)}>
+            <input 
+                type='text' 
+                name='taskInput' 
+                placeholder='Task'
+                value= {props.taskInput}
+                onChange= {props.changeHandler} 
+            />
+            <button>Submit</button>
+            <button>Clear Completed</button>
+        </form>
+    );
 
-    render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <input
-                    name='text'
-                    value={this.state.text}
-                    onChange={this.handleChange}
-                    placeholder='tasks' 
-                />
-                <button onClick={this.handleSubmit}>Add Task</button>
-                <button onClick={this.handleRemove}>Clear Task</button>
-            </form>
-        );
-    }
 }
 
-export default TodoForm; 
+export default TodoForm;
