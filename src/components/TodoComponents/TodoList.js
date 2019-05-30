@@ -4,10 +4,18 @@
 import React from 'react';
 import Todo from './Todo'
 
+
 function TodoList(props) {
     return (
         <div>
-            {props.tasks.map(task => <Todo task={task.task} />)}
+            {props.tasks.map(task => 
+            <Todo 
+            key={task.id}
+            name={task.task} 
+            toggleTask={props.toggleTask}
+            id={task.id}
+            />
+            )}
         </div>
     )
 }

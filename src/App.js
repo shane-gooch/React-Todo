@@ -1,8 +1,8 @@
 import React from 'react';
-import TodoList from './components/TodoComponents/TodoList'
+import TodoList from './components/TodoComponents/TodoList';
 import TodoForm from './components/TodoComponents/TodoForm';
 
-
+import './components/TodoComponents/Todo.css';
 
 
 class App extends React.Component {
@@ -25,7 +25,6 @@ class App extends React.Component {
       taskInput: ''
     };
 
-
     changeHandler = e => {
       e.preventDefault();
       this.setState({
@@ -45,7 +44,23 @@ class App extends React.Component {
         taskInput: ''
       })
     }
-    clearCompleted = (e) => {
+    toggleTask = id => {
+      this.setState(prevState => {
+        return {
+          tasks: prevState.tasks.map(task => {
+            if(task.id === id) {
+              return {
+                ...task,
+                completed: !task.completed
+              };
+            } else {
+              return task;
+            }
+          })
+        }
+      })
+    }
+    clearCompleted = e => {
       e.preventDefault();
       this.setState({
         tasks: this.state.tasks.filter((task) => !task.completed)
@@ -55,12 +70,15 @@ class App extends React.Component {
       return (
         <div>
           <h1>ToDo List</h1>
-          <TodoList tasks={this.state.tasks}/>
           <TodoForm 
           taskInput={this.state.taskInput} 
           changeHandler={this.changeHandler} 
           addTask={this.addTask}
           clearCompleted={this.clearCompleted}
+          />
+          <TodoList 
+          tasks={this.state.tasks} 
+          toggleTask={this.toggleTask}
           />
         </div>
       );
